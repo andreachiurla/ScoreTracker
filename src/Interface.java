@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 public class Interface implements ActionListener {
     final int frameWidth = 300;
@@ -14,6 +15,8 @@ public class Interface implements ActionListener {
     JButton btnAdd1Guest = new JButton("+1");
     JButton btnRemove1Home = new JButton("-1");
     JButton btnRemove1Guest = new JButton("-1");
+
+    FileManager fileManager = new FileManager();
 
 
     public Interface(){
@@ -56,10 +59,10 @@ public class Interface implements ActionListener {
     // when one button is pressed:
     public void actionPerformed(ActionEvent e) {
         // checks which buttons has been pressed
-        if("1 player".equals(e.getActionCommand())){
-            frame.getContentPane().setBackground(Color.red);       // Changing Background Color
-        }else{
-
+        if(e.getSource() == btnAdd1Home){
+            fileManager.add1Home();
+        }else if(e.getSource() == btnAdd1Guest){
+            fileManager.add1Guest();
         }
     }
 }
