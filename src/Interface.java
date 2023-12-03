@@ -24,7 +24,7 @@ public class Interface implements ActionListener {
     }
 
     public void createFrame(){
-        frame.setTitle("PointsTracker");
+        frame.setTitle("ScoreTracker");
         frame.getContentPane().setLayout(null);
         frame.setSize(frameWidth, frameHeight);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);   // stop esecution when frame is closed
