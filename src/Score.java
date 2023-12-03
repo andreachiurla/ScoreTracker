@@ -3,14 +3,14 @@ public class Score {
 
     public Score(int ptsHome, int ptsGuest){
         if(ptsHome < 10){
-            score += " ";
+            score += "  ";
         }
         score += ptsHome;
         score += " - ";
-        if(ptsHome < 10){
+        score += ptsGuest;
+        if(ptsGuest < 10){
             score += " ";
         }
-        score += ptsGuest;
     }
 
     public String toString(){
