@@ -11,7 +11,8 @@ public class FileManager {
         ptsGuest = 0;
 
         try (FileWriter myWriter = new FileWriter("points.txt")) {
-            myWriter.write("Files in Java might be tricky, but it is fun enough!");
+            Score score = new Score(0, 0);
+            myWriter.write(score.toString());
             myWriter.close();
             System.out.println("Successfully wrote to the file.");
         } catch (IOException e) {
@@ -38,7 +39,7 @@ public class FileManager {
             }else{
                 ptsGuest++;
             }
-            Punteggio pts = new Punteggio(ptsHome, ptsGuest);
+            Score pts = new Score(ptsHome, ptsGuest);
             myWriter.write(pts.toString());
             myWriter.close();
             System.out.println("Successfully wrote to the file.");
