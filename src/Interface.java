@@ -1,8 +1,6 @@
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 
 public class Interface implements ActionListener {
     final int frameWidth = 300;
@@ -31,7 +29,11 @@ public class Interface implements ActionListener {
         frame.setVisible(true);
     }
 
-    public void addInteractions(){
+    public void setHomePage(){
+
+    }
+
+    public void setPointsTracker(){
         // Home Label
         JLabel labelHome = new JLabel();
         labelHome.setBounds(frameMargin, frameMargin, 50, 20);
