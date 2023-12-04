@@ -68,7 +68,7 @@ public class FileManager {
             }
             // write in the file
             Format pts = new Format(ptsHome, ptsGuest);
-            myWriter.write(pts.toString());
+            myWriter.write(pts.toString(0));
             myWriter.close();
             System.out.println("Successfully wrote to the file.");
         } catch (IOException e) {
