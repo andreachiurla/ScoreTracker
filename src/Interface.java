@@ -9,6 +9,9 @@ public class Interface implements ActionListener {
     final int buttonHeight = 100;
     final int frameMargin = 20;
     JFrame frame = new JFrame();
+    JButton btnTeams = new JButton("Seleziona squadre");
+    JButton btnPointsTracker = new JButton("Points Tracker");
+
     JButton btnAdd1Home = new JButton("+1");
     JButton btnAdd1Guest = new JButton("+1");
     JButton btnRemove1Home = new JButton("-1");
@@ -29,7 +32,28 @@ public class Interface implements ActionListener {
         frame.setVisible(true);
     }
 
+    public void setHomePage(){
+        // button choose teams
+        btnTeams.setBounds(frameMargin, frameMargin , buttonWidth, buttonHeight);
+        btnTeams.addActionListener(this);    // Registering ActionListener to the button
+        frame.add(btnTeams);
+
+        // button points tracker
+        btnPointsTracker.setBounds(frameWidth - frameMargin - buttonWidth, frameMargin , buttonWidth, buttonHeight);
+        btnPointsTracker.addActionListener(this);    // Registering ActionListener to the button
+        frame.add(btnPointsTracker);
+    }
+
+    public void setTeams(){
+        JLabel lblHome = new JLabel("Casa:");
+        lblHome.setBounds(frameMargin, frameMargin, buttonWidth, buttonHeight);
+        frame.add(lblHome);
+    }
+
     public void setPointsTracker(){
+        // removing everything that's in the frame
+        frame.getContentPane().removeAll();
+
         // Home Label
         JLabel labelHome = new JLabel();
         labelHome.setBounds(frameMargin, frameMargin, 50, 20);
@@ -67,7 +91,11 @@ public class Interface implements ActionListener {
     // when one button is pressed:
     public void actionPerformed(ActionEvent e) {
         // checks which buttons has been pressed
-        if(e.getSource() == btnAdd1Home){
+        if(e.getSource() == btnTeams){
+            setTeams();
+        }else if(e.getSource() == btnPointsTracker){
+            setPointsTracker();
+        }else if(e.getSource() == btnAdd1Home){
             fileManager.add1Home();
         }else if(e.getSource() == btnAdd1Guest){
             fileManager.add1Guest();
