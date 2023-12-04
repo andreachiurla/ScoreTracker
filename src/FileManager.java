@@ -12,7 +12,7 @@ public class FileManager {
 
         try (FileWriter myWriter = new FileWriter("points.txt")) {
             Format score = new Format(0, 0);
-            myWriter.write(score.toString());
+            myWriter.write(score.toString(0));
             myWriter.close();
             System.out.println("Successfully wrote to the file.");
         } catch (IOException e) {
@@ -21,8 +21,7 @@ public class FileManager {
         }
 
         try (FileWriter myWriter = new FileWriter("teams.txt")) {
-            Format score = new Format(0, 0);
-            myWriter.write(score.toString());
+            myWriter.write("                Casa - Ospiti");    // 16 spaces before home (20 - 4 ("home"))
             myWriter.close();
             System.out.println("Successfully wrote to the file.");
         } catch (IOException e) {
@@ -79,7 +78,15 @@ public class FileManager {
     }
 
     public void setTeams(String home, String guest){
-
+        Format format = new Format(home, guest);
+        try (FileWriter myWriter = new FileWriter("teams.txt")) {
+            myWriter.write(format.toString(1));    // 16 spaces before home (20 - 4 ("home"))
+            myWriter.close();
+            System.out.println("Successfully wrote to the file.");
+        } catch (IOException e) {
+            System.out.println("An error occurred opening the file.");
+            e.printStackTrace();
+        }
     }
 
 }
