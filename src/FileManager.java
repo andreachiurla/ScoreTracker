@@ -1,5 +1,6 @@
 import java.io.FileWriter;
 import java.io.IOException;
+import java.security.spec.RSAOtherPrimeInfo;
 
 public class FileManager {
     // points:   home and guest
@@ -22,23 +23,42 @@ public class FileManager {
     }
 
     public void add1Home(){
-        add1(0);
+        act(0);
     }
     public void add1Guest(){
-        add1(1);
+        act(1);
+    }
+    public void remove1Home(){
+        if(ptsHome > 0) {
+            act(2);
+        }else{
+            System.out.println("The score can't be a negative number.");
+        }
+    }
+    public void remove1Guest(){
+        if(ptsGuest > 0) {
+            act(3);
+        }else{
+            System.out.println("The score can't be a negative number.");
+        }
     }
 
     /**
      * Prints in the file the actual points
-     * @param team 0 - Home; else - Guest
+     * @param action 0 = +1 Home | 1 = +1 Guest | 2 = -1 Home | 3 = -1 Guest
      */
-    private void add1(int team){
+    private void act(int action){
         try (FileWriter myWriter = new FileWriter("points.txt")) {
-            if(team == 0) {
+            if(action == 0) {   // change score
                 ptsHome++;
-            }else{
+            }else if(action == 1){
                 ptsGuest++;
+            }else if(action == 2){
+                ptsHome--;
+            }else if(action == 3){
+                ptsGuest--;
             }
+            // write in the file
             Score pts = new Score(ptsHome, ptsGuest);
             myWriter.write(pts.toString());
             myWriter.close();
