@@ -9,8 +9,9 @@ public class Interface implements ActionListener {
     final int buttonHeight = 100;
     final int frameMargin = 20;
     JFrame frame = new JFrame();
-    JButton btnTeams = new JButton("Seleziona squadre");
+    JButton btnTeams = new JButton("Squadre");
     JButton btnPointsTracker = new JButton("Points Tracker");
+    JButton btnSubmitTeams = new JButton();
 
     JButton btnAdd1Home = new JButton("+1");
     JButton btnAdd1Guest = new JButton("+1");
@@ -49,9 +50,28 @@ public class Interface implements ActionListener {
         frame.getContentPane().removeAll();
         frame.getContentPane().repaint();
 
+        // Home label
         JLabel lblHome = new JLabel("Casa:");
-        lblHome.setBounds(frameMargin, frameMargin, buttonWidth, buttonHeight);
+        lblHome.setBounds(frameMargin, frameHeight / 5, 50, 20);
         frame.add(lblHome);
+
+        // Home text field
+        JTextField txtHome = new JTextField();
+        txtHome.setBounds(frameMargin + 60, frameHeight / 5, 170, 20);
+        frame.add(txtHome);
+
+        // Guest label
+        JLabel lblGuest = new JLabel("Ospiti:");
+        lblGuest.setBounds(frameMargin, frameHeight / 5 * 2, 50, 20);
+        frame.add(lblGuest);
+
+        // Guest text field
+        JTextField txtGuest = new JTextField();
+        txtGuest.setBounds(frameMargin + 60, frameHeight / 5 * 2, 170, 20);
+        frame.add(txtGuest);
+
+        // Submit button
+        // to add
     }
 
     public void setPointsTracker(){
