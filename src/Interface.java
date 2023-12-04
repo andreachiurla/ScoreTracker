@@ -29,10 +29,6 @@ public class Interface implements ActionListener {
         frame.setVisible(true);
     }
 
-    public void setHomePage(){
-
-    }
-
     public void setPointsTracker(){
         // Home Label
         JLabel labelHome = new JLabel();

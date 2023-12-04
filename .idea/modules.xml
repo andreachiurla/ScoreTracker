@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/PointsTracker.iml" filepath="$PROJECT_DIR$/PointsTracker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ScoreTracker.iml" filepath="$PROJECT_DIR$/ScoreTracker.iml" />
     </modules>
   </component>
 </project>
