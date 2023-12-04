@@ -20,6 +20,16 @@ public class FileManager {
             System.out.println("An error occurred opening the file.");
             e.printStackTrace();
         }
+
+        try (FileWriter myWriter = new FileWriter("teams.txt")) {
+            Score score = new Score(0, 0);
+            myWriter.write(score.toString());
+            myWriter.close();
+            System.out.println("Successfully wrote to the file.");
+        } catch (IOException e) {
+            System.out.println("An error occurred opening the file.");
+            e.printStackTrace();
+        }
     }
 
     public void add1Home(){
@@ -68,4 +78,9 @@ public class FileManager {
             e.printStackTrace();
         }
     }
+
+    public void setTeams(String home, String guest){
+
+    }
+
 }

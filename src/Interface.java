@@ -12,7 +12,7 @@ public class Interface implements ActionListener {
     JFrame frame = new JFrame();
     JButton btnTeams = new JButton("Squadre");
     JButton btnPointsTracker = new JButton("Points Tracker");
-    JButton btnSubmitTeams = new JButton();
+    JButton btnSubmitTeams = new JButton("Submit");
     JButton btnReturnToHome = new JButton("Home");
 
     // POINTS TRACKER PAGE
@@ -20,6 +20,9 @@ public class Interface implements ActionListener {
     JButton btnAdd1Guest = new JButton("+1");
     JButton btnRemove1Home = new JButton("-1");
     JButton btnRemove1Guest = new JButton("-1");
+    JTextField txtHome = new JTextField();
+    JTextField txtGuest = new JTextField();
+    JLabel lblErrorTextField = new JLabel();
 
     FileManager fileManager = new FileManager();
 
@@ -29,7 +32,7 @@ public class Interface implements ActionListener {
     }
 
     public void createFrame(){
-        frame.setTitle("ScoreTracker");
+        frame.setTitle("Score Tracker");
         frame.getContentPane().setLayout(null);
         frame.setSize(frameWidth, frameHeight);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);   // stop esecution when frame is closed
@@ -63,7 +66,6 @@ public class Interface implements ActionListener {
         frame.add(lblHome);
 
         // Home text field
-        JTextField txtHome = new JTextField();
         txtHome.setBounds(frameMargin + 60, frameHeight / 5, 170, 20);
         frame.add(txtHome);
 
@@ -73,7 +75,6 @@ public class Interface implements ActionListener {
         frame.add(lblGuest);
 
         // Guest text field
-        JTextField txtGuest = new JTextField();
         txtGuest.setBounds(frameMargin + 60, frameHeight / 5 * 2, 170, 20);
         frame.add(txtGuest);
 
@@ -82,10 +83,10 @@ public class Interface implements ActionListener {
         btnReturnToHome.addActionListener(this);    // Registering ActionListener to the button
         frame.add(btnReturnToHome);
 
-
-
         // Submit button
-        // to add
+        btnSubmitTeams.setBounds(frameMargin * 2, 180, 100, 40);
+        btnSubmitTeams.addActionListener(this);    // Registering ActionListener to the button
+        frame.add(btnSubmitTeams);
     }
 
     public void setPointsTracker(){
@@ -150,6 +151,17 @@ public class Interface implements ActionListener {
             fileManager.remove1Guest();
         }else if(e.getSource() == btnReturnToHome){
             setHomePage();
+        }else if(e.getSource() == btnSubmitTeams){
+            if(txtHome.getText().equals("") || txtGuest.getText().equals("")){
+                lblErrorTextField.setBounds(130, 180, 150, 40);
+                frame.add(lblErrorTextField);
+                lblErrorTextField.setText("Nothing Entered");
+                //frame.setSize(frameWidth + 1, frameHeight);
+                System.out.println("Nothing entered");
+            }else{
+                frame.remove(lblErrorTextField);
+                fileManager.setTeams(txtHome.getText(), txtGuest.getText());
+            }
         }
     }
 }
