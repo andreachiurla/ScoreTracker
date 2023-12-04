@@ -1,7 +1,7 @@
-public class Score {
+public class Format {
     private String score = "";
 
-    public Score(int ptsHome, int ptsGuest){
+    public Format(int ptsHome, int ptsGuest){
         if(ptsHome < 10){
             score += "  ";
         }

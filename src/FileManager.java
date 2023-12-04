@@ -1,6 +1,5 @@
 import java.io.FileWriter;
 import java.io.IOException;
-import java.security.spec.RSAOtherPrimeInfo;
 
 public class FileManager {
     // points:   home and guest
@@ -12,7 +11,7 @@ public class FileManager {
         ptsGuest = 0;
 
         try (FileWriter myWriter = new FileWriter("points.txt")) {
-            Score score = new Score(0, 0);
+            Format score = new Format(0, 0);
             myWriter.write(score.toString());
             myWriter.close();
             System.out.println("Successfully wrote to the file.");
@@ -22,7 +21,7 @@ public class FileManager {
         }
 
         try (FileWriter myWriter = new FileWriter("teams.txt")) {
-            Score score = new Score(0, 0);
+            Format score = new Format(0, 0);
             myWriter.write(score.toString());
             myWriter.close();
             System.out.println("Successfully wrote to the file.");
@@ -69,7 +68,7 @@ public class FileManager {
                 ptsGuest--;
             }
             // write in the file
-            Score pts = new Score(ptsHome, ptsGuest);
+            Format pts = new Format(ptsHome, ptsGuest);
             myWriter.write(pts.toString());
             myWriter.close();
             System.out.println("Successfully wrote to the file.");
