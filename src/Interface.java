@@ -6,7 +6,7 @@ import java.io.File;
 
 public class Interface implements ActionListener {
     final int frameWidth = 300;
-    final int frameHeight = 300;
+    final int frameHeight = 250;
     final int buttonWidth = 100;
     final int buttonHeight = 100;
     final int frameMargin = 20;
@@ -38,21 +38,31 @@ public class Interface implements ActionListener {
         labelHome.setText("Home");
         frame.add(labelHome);
 
-        // button 1
+        // button +1 home
         btnAdd1Home.setBounds(frameMargin, frameMargin * 2, buttonWidth, buttonHeight);
         btnAdd1Home.addActionListener(this);    //Registering ActionListener to the button
         frame.add(btnAdd1Home);
 
-        // Home Label
+        // Guest Label
         JLabel labelGuest = new JLabel();
         labelGuest.setBounds(frameWidth - 50 - frameMargin, frameMargin, 50, 20);
         labelGuest.setText("Guest");
         frame.add(labelGuest);
 
-        // button 2
+        // button +1 guest
         btnAdd1Guest.setBounds(frameWidth - buttonWidth - frameMargin, frameMargin * 2, buttonWidth, buttonHeight);
         btnAdd1Guest.addActionListener(this);   //Registering ActionListener to the button
         frame.add(btnAdd1Guest);
+
+        // button -1 home
+        btnRemove1Home.setBounds(frameMargin, frameMargin * 8, buttonWidth / 2, buttonHeight / 2);
+        btnRemove1Home.addActionListener(this);   //Registering ActionListener to the button
+        frame.add(btnRemove1Home);
+
+        // button -1 guest
+        btnRemove1Guest.setBounds(frameWidth - buttonWidth / 2 - frameMargin, frameMargin * 8, buttonWidth / 2, buttonHeight / 2);
+        btnRemove1Guest.addActionListener(this);   //Registering ActionListener to the button
+        frame.add(btnRemove1Guest);
     }
 
     @Override
@@ -63,6 +73,10 @@ public class Interface implements ActionListener {
             fileManager.add1Home();
         }else if(e.getSource() == btnAdd1Guest){
             fileManager.add1Guest();
+        }else if(e.getSource() == btnRemove1Home){
+            fileManager.remove1Home();
+        }else if(e.getSource() == btnRemove1Guest){
+            fileManager.remove1Guest();
         }
     }
 }
