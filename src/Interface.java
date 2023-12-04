@@ -20,15 +20,18 @@ public class Interface implements ActionListener {
     JButton btnAdd1Guest = new JButton("+1");
     JButton btnRemove1Home = new JButton("-1");
     JButton btnRemove1Guest = new JButton("-1");
+
     JTextField txtHome = new JTextField();
     JTextField txtGuest = new JTextField();
     JLabel lblErrorTextField = new JLabel();
 
     FileManager fileManager = new FileManager();
 
+    private boolean isAlreadyEsecutedOnce;
+
 
     public Interface(){
-
+        isAlreadyEsecutedOnce = false;
     }
 
     public void createFrame(){
@@ -37,12 +40,18 @@ public class Interface implements ActionListener {
         frame.setSize(frameWidth, frameHeight);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);   // stop esecution when frame is closed
         frame.setVisible(true);
+        setActionListener();
+    }
+
+    private void setActionListener(){
+        btnRemove1Home.addActionListener(this);   //Registering ActionListener to the button
     }
 
     public void setHomePage(){
         // removing everything that's in the frame
         frame.getContentPane().removeAll();
         frame.getContentPane().repaint();
+        frame.getContentPane().revalidate();
 
         // button choose teams
         btnTeams.setBounds(frameMargin, frameMargin , buttonWidth, buttonHeight);
@@ -59,6 +68,7 @@ public class Interface implements ActionListener {
         // removing everything that's in the frame
         frame.getContentPane().removeAll();
         frame.getContentPane().repaint();
+        frame.getContentPane().revalidate();
 
         // Home label
         JLabel lblHome = new JLabel("Casa:");
@@ -87,13 +97,14 @@ public class Interface implements ActionListener {
         btnSubmitTeams.setBounds(frameMargin * 2, 180, 100, 40);
         btnSubmitTeams.addActionListener(this);    // Registering ActionListener to the button
         frame.add(btnSubmitTeams);
+
     }
 
     public void setPointsTracker(){
         // removing everything that's in the frame
         frame.getContentPane().removeAll();
         frame.getContentPane().repaint();
-        //frame.getContentPane().revalidate();
+        frame.getContentPane().revalidate();
 
         // Home Label
         JLabel labelHome = new JLabel();
@@ -103,7 +114,6 @@ public class Interface implements ActionListener {
 
         // button +1 home
         btnAdd1Home.setBounds(frameMargin, frameMargin * 6, buttonWidth, buttonHeight);
-        btnAdd1Home.addActionListener(this);    //Registering ActionListener to the button
         frame.add(btnAdd1Home);
 
         // Guest Label
@@ -114,23 +124,28 @@ public class Interface implements ActionListener {
 
         // button +1 guest
         btnAdd1Guest.setBounds(frameWidth - buttonWidth - frameMargin, frameMargin * 6, buttonWidth, buttonHeight);
-        btnAdd1Guest.addActionListener(this);   //Registering ActionListener to the button
         frame.add(btnAdd1Guest);
 
         // -1 home button
-        btnRemove1Home.setBounds(frameMargin, frameHeight - buttonHeight / 2 - frameMargin * 4  , buttonWidth / 2, buttonHeight / 2);
-        btnRemove1Home.addActionListener(this);   //Registering ActionListener to the button
+        btnRemove1Home.setBounds(frameMargin, frameHeight - buttonHeight / 2 - frameMargin * 4, buttonWidth / 2, buttonHeight / 2);
         frame.add(btnRemove1Home);
 
         // -1 guest button
         btnRemove1Guest.setBounds(frameWidth - buttonWidth / 2 - frameMargin, frameHeight - buttonHeight / 2 - frameMargin * 4, buttonWidth / 2, buttonHeight / 2);
-        btnRemove1Guest.addActionListener(this);   //Registering ActionListener to the button
         frame.add(btnRemove1Guest);
 
         // Return to Home Page button
         btnReturnToHome.setBounds(frameWidth / 2 - 35, frameMargin, 70, 30);
-        btnReturnToHome.addActionListener(this);    // Registering ActionListener to the button
         frame.add(btnReturnToHome);
+
+        if(!isAlreadyEsecutedOnce){
+            isAlreadyEsecutedOnce = true;
+            btnRemove1Guest.addActionListener(this);   //Registering ActionListener to the button
+            btnAdd1Home.addActionListener(this);    //Registering ActionListener to the button
+            btnAdd1Guest.addActionListener(this);   //Registering ActionListener to the button
+            btnRemove1Home.addActionListener(this);   //Registering ActionListener to the button
+            btnReturnToHome.addActionListener(this);    // Registering ActionListener to the button
+        }
     }
 
     @Override
