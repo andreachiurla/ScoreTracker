@@ -45,6 +45,10 @@ public class Interface implements ActionListener {
     }
 
     public void setTeams(){
+        // removing everything that's in the frame
+        frame.getContentPane().removeAll();
+        frame.getContentPane().repaint();
+
         JLabel lblHome = new JLabel("Casa:");
         lblHome.setBounds(frameMargin, frameMargin, buttonWidth, buttonHeight);
         frame.add(lblHome);
@@ -53,6 +57,7 @@ public class Interface implements ActionListener {
     public void setPointsTracker(){
         // removing everything that's in the frame
         frame.getContentPane().removeAll();
+        frame.getContentPane().repaint();
 
         // Home Label
         JLabel labelHome = new JLabel();
