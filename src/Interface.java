@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -58,12 +59,14 @@ public class Interface implements ActionListener {
         frame.getContentPane().revalidate();
 
         // button choose teams
-        btnTeams.setBounds(frameMargin, frameMargin , buttonWidth, buttonHeight);
+        btnTeams.setBounds(frameMargin, frameHeight / 2 - buttonHeight / 2 - 30, buttonWidth, buttonHeight);
+        btnTeams.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnTeams.addActionListener(this);    // Registering ActionListener to the button
         frame.add(btnTeams);
 
         // button points tracker
-        btnPointsTracker.setBounds(frameWidth - frameMargin - buttonWidth, frameMargin , buttonWidth, buttonHeight);
+        btnPointsTracker.setBounds(frameWidth - frameMargin - buttonWidth, frameHeight / 2 - buttonHeight / 2 - 30, buttonWidth, buttonHeight);
+        btnPointsTracker.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnPointsTracker.addActionListener(this);    // Registering ActionListener to the button
         frame.add(btnPointsTracker);
     }
@@ -94,10 +97,12 @@ public class Interface implements ActionListener {
 
         // Return to Home Page button
         btnReturnToHome.setBounds(frameWidth - frameMargin - 70, frameMargin, 70, 30);
+        btnReturnToHome.setCursor(new Cursor(Cursor.HAND_CURSOR));
         frame.add(btnReturnToHome);
 
         // Submit button
         btnSubmitTeams.setBounds(frameMargin * 2, 180, 100, 40);
+        btnSubmitTeams.setCursor(new Cursor(Cursor.HAND_CURSOR));
         frame.add(btnSubmitTeams);
 
         if(!isAlreadyEsecutedOnce2){        // Registering ActionListener to the button
@@ -122,6 +127,7 @@ public class Interface implements ActionListener {
 
         // button +1 home
         btnAdd1Home.setBounds(frameMargin, frameMargin * 6, buttonWidth, buttonHeight);
+        btnAdd1Home.setCursor(new Cursor(Cursor.HAND_CURSOR));
         frame.add(btnAdd1Home);
 
         // Guest Label
@@ -133,20 +139,25 @@ public class Interface implements ActionListener {
 
         // button +1 guest
         btnAdd1Guest.setBounds(frameWidth - buttonWidth - frameMargin, frameMargin * 6, buttonWidth, buttonHeight);
+        btnAdd1Guest.setCursor(new Cursor(Cursor.HAND_CURSOR));
         frame.add(btnAdd1Guest);
 
         // -1 home button
         btnRemove1Home.setBounds(frameMargin, frameHeight - buttonHeight / 2 - frameMargin * 4, buttonWidth / 2, buttonHeight / 2);
+        btnRemove1Home.setCursor(new Cursor(Cursor.HAND_CURSOR));
         frame.add(btnRemove1Home);
 
         // -1 guest button
         btnRemove1Guest.setBounds(frameWidth - buttonWidth / 2 - frameMargin, frameHeight - buttonHeight / 2 - frameMargin * 4, buttonWidth / 2, buttonHeight / 2);
+        btnRemove1Guest.setCursor(new Cursor(Cursor.HAND_CURSOR));
         frame.add(btnRemove1Guest);
 
         // Return to Home Page button
         btnReturnToHome.setBounds(frameWidth / 2 - 35, frameMargin, 70, 30);
+        btnReturnToHome.setCursor(new Cursor(Cursor.HAND_CURSOR));
         frame.add(btnReturnToHome);
 
+        // setting action listeners
         if(!isAlreadyEsecutedOnce1){    // Registering ActionListener to the button
             isAlreadyEsecutedOnce1 = true;
             btnRemove1Guest.addActionListener(this);
