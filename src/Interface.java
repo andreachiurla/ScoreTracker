@@ -1,5 +1,4 @@
 import javax.swing.*;
-import javax.swing.plaf.synth.SynthOptionPaneUI;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -26,12 +25,17 @@ public class Interface implements ActionListener {
     JLabel lblErrorTextField = new JLabel();
 
     FileManager fileManager = new FileManager();
+    String strHome = "Home";
+    String strGuest = "Guest";
 
-    private boolean isAlreadyEsecutedOnce;
+    private boolean isAlreadyEsecutedOnce1;
+    private boolean isAlreadyEsecutedOnce2;
+
 
 
     public Interface(){
-        isAlreadyEsecutedOnce = false;
+        isAlreadyEsecutedOnce1 = false;
+        isAlreadyEsecutedOnce2 = false;
     }
 
     public void createFrame(){
@@ -40,11 +44,11 @@ public class Interface implements ActionListener {
         frame.setSize(frameWidth, frameHeight);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);   // stop esecution when frame is closed
         frame.setVisible(true);
-        setActionListener();
     }
 
-    private void setActionListener(){
-        btnRemove1Home.addActionListener(this);   //Registering ActionListener to the button
+    public void setTeamsName(String inHome, String inGuest){
+        strHome = inHome;
+        strGuest = inGuest;
     }
 
     public void setHomePage(){
@@ -64,7 +68,7 @@ public class Interface implements ActionListener {
         frame.add(btnPointsTracker);
     }
 
-    public void setTeams(){
+    public void setTeamsPage(){
         // removing everything that's in the frame
         frame.getContentPane().removeAll();
         frame.getContentPane().repaint();
@@ -90,17 +94,21 @@ public class Interface implements ActionListener {
 
         // Return to Home Page button
         btnReturnToHome.setBounds(frameWidth - frameMargin - 70, frameMargin, 70, 30);
-        btnReturnToHome.addActionListener(this);    // Registering ActionListener to the button
         frame.add(btnReturnToHome);
 
         // Submit button
         btnSubmitTeams.setBounds(frameMargin * 2, 180, 100, 40);
-        btnSubmitTeams.addActionListener(this);    // Registering ActionListener to the button
         frame.add(btnSubmitTeams);
+
+        if(!isAlreadyEsecutedOnce2){        // Registering ActionListener to the button
+            isAlreadyEsecutedOnce2 = true;
+            btnSubmitTeams.addActionListener(this);
+            btnReturnToHome.addActionListener(this);
+        }
 
     }
 
-    public void setPointsTracker(){
+    public void setPointsTrackerPage(){
         // removing everything that's in the frame
         frame.getContentPane().removeAll();
         frame.getContentPane().repaint();
@@ -108,8 +116,8 @@ public class Interface implements ActionListener {
 
         // Home Label
         JLabel labelHome = new JLabel();
-        labelHome.setBounds(frameMargin, frameMargin * 4, 50, 20);
-        labelHome.setText("Home");
+        labelHome.setBounds(frameMargin, frameMargin * 4, 150, 20);
+        labelHome.setText(strHome);
         frame.add(labelHome);
 
         // button +1 home
@@ -118,8 +126,9 @@ public class Interface implements ActionListener {
 
         // Guest Label
         JLabel labelGuest = new JLabel();
-        labelGuest.setBounds(frameWidth - 50 - frameMargin, frameMargin * 4, 50, 20);
-        labelGuest.setText("Guest");
+        labelGuest.setBounds(frameWidth - 150 - frameMargin, frameMargin * 4, 150, 20);
+        labelGuest.setHorizontalAlignment(SwingConstants.RIGHT);
+        labelGuest.setText(strGuest);
         frame.add(labelGuest);
 
         // button +1 guest
@@ -138,13 +147,13 @@ public class Interface implements ActionListener {
         btnReturnToHome.setBounds(frameWidth / 2 - 35, frameMargin, 70, 30);
         frame.add(btnReturnToHome);
 
-        if(!isAlreadyEsecutedOnce){
-            isAlreadyEsecutedOnce = true;
-            btnRemove1Guest.addActionListener(this);   //Registering ActionListener to the button
-            btnAdd1Home.addActionListener(this);    //Registering ActionListener to the button
-            btnAdd1Guest.addActionListener(this);   //Registering ActionListener to the button
-            btnRemove1Home.addActionListener(this);   //Registering ActionListener to the button
-            btnReturnToHome.addActionListener(this);    // Registering ActionListener to the button
+        if(!isAlreadyEsecutedOnce1){    // Registering ActionListener to the button
+            isAlreadyEsecutedOnce1 = true;
+            btnRemove1Guest.addActionListener(this);
+            btnAdd1Home.addActionListener(this);
+            btnAdd1Guest.addActionListener(this);
+            btnRemove1Home.addActionListener(this);
+            btnReturnToHome.addActionListener(this);
         }
     }
 
@@ -153,9 +162,9 @@ public class Interface implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         // checks which buttons has been pressed
         if(e.getSource() == btnTeams){
-            setTeams();
+            setTeamsPage();
         }else if(e.getSource() == btnPointsTracker){
-            setPointsTracker();
+            setPointsTrackerPage();
         }else if(e.getSource() == btnAdd1Home){
             fileManager.add1Home();
         }else if(e.getSource() == btnAdd1Guest){
@@ -175,7 +184,8 @@ public class Interface implements ActionListener {
                 System.out.println("Nothing entered");
             }else{
                 frame.remove(lblErrorTextField);
-                fileManager.setTeams(txtHome.getText(), txtGuest.getText());
+                String[] teamsName = fileManager.setTeams(txtHome.getText(), txtGuest.getText());
+                setTeamsName(teamsName[0], teamsName[1]);
             }
         }
     }

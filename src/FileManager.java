@@ -77,7 +77,7 @@ public class FileManager {
         }
     }
 
-    public void setTeams(String home, String guest){
+    public String[] setTeams(String home, String guest){
         Format format = new Format(home, guest);
         try (FileWriter myWriter = new FileWriter("teams.txt")) {
             myWriter.write(format.toString(1));    // 16 spaces before home (20 - 4 ("home"))
@@ -87,6 +87,7 @@ public class FileManager {
             System.out.println("An error occurred opening the file.");
             e.printStackTrace();
         }
+        return new String[] {home, guest};
     }
 
 }
