@@ -1,6 +1,5 @@
 import java.io.FileWriter;
 import java.io.IOException;
-import java.security.spec.RSAOtherPrimeInfo;
 
 public class FileManager {
     // points:   home and guest
@@ -12,8 +11,17 @@ public class FileManager {
         ptsGuest = 0;
 
         try (FileWriter myWriter = new FileWriter("points.txt")) {
-            Score score = new Score(0, 0);
-            myWriter.write(score.toString());
+            Format score = new Format(0, 0);
+            myWriter.write(score.toString(0));
+            myWriter.close();
+            System.out.println("Successfully wrote to the file.");
+        } catch (IOException e) {
+            System.out.println("An error occurred opening the file.");
+            e.printStackTrace();
+        }
+
+        try (FileWriter myWriter = new FileWriter("teams.txt")) {
+            myWriter.write("                Casa - Ospiti");    // 16 spaces before home (20 - 4 ("home"))
             myWriter.close();
             System.out.println("Successfully wrote to the file.");
         } catch (IOException e) {
@@ -59,8 +67,8 @@ public class FileManager {
                 ptsGuest--;
             }
             // write in the file
-            Score pts = new Score(ptsHome, ptsGuest);
-            myWriter.write(pts.toString());
+            Format pts = new Format(ptsHome, ptsGuest);
+            myWriter.write(pts.toString(0));
             myWriter.close();
             System.out.println("Successfully wrote to the file.");
         } catch (IOException e) {
@@ -68,4 +76,18 @@ public class FileManager {
             e.printStackTrace();
         }
     }
+
+    public String[] setTeams(String home, String guest){
+        Format format = new Format(home, guest);
+        try (FileWriter myWriter = new FileWriter("teams.txt")) {
+            myWriter.write(format.toString(1));    // 16 spaces before home (20 - 4 ("home"))
+            myWriter.close();
+            System.out.println("Successfully wrote to the file.");
+        } catch (IOException e) {
+            System.out.println("An error occurred opening the file.");
+            e.printStackTrace();
+        }
+        return new String[] {home, guest};
+    }
+
 }
