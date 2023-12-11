@@ -132,7 +132,7 @@ public class Interface implements ActionListener {
         frame.add(btnAdd1Home);
 
         // Score label
-        lblScore.setBounds(frameWidth / 2 - 30, 100, 80, 20);
+        lblScore.setBounds(frameWidth / 2 - 30, 120, 80, 20);
         lblScore.setFont(new Font("Arial", Font.PLAIN, 20));
         frame.add(lblScore);
 
