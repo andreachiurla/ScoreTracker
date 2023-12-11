@@ -28,6 +28,7 @@ public class Interface implements ActionListener {
     FileManager fileManager = new FileManager();
     String strHome = "Home";
     String strGuest = "Guest";
+    JLabel lblScore = new JLabel("  0 - 0 ");
 
     private boolean isAlreadyEsecutedOnce1;
     private boolean isAlreadyEsecutedOnce2;
@@ -43,7 +44,7 @@ public class Interface implements ActionListener {
         frame.setTitle("Score Tracker");
         frame.getContentPane().setLayout(null);
         frame.setSize(frameWidth, frameHeight);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);   // stop esecution when frame is closed
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);   // stop execution when frame is closed
         frame.setVisible(true);
     }
 
@@ -105,7 +106,7 @@ public class Interface implements ActionListener {
         btnSubmitTeams.setCursor(new Cursor(Cursor.HAND_CURSOR));
         frame.add(btnSubmitTeams);
 
-        if(!isAlreadyEsecutedOnce2){        // Registering ActionListener to the button
+        if(!isAlreadyEsecutedOnce2){        // Registering ActionListener to the buttons
             isAlreadyEsecutedOnce2 = true;
             btnSubmitTeams.addActionListener(this);
             btnReturnToHome.addActionListener(this);
@@ -122,7 +123,7 @@ public class Interface implements ActionListener {
         // Home Label
         JLabel labelHome = new JLabel();
         labelHome.setBounds(frameMargin, frameMargin * 4, 150, 20);
-        labelHome.setText(strHome);
+        labelHome.setText(strHome + " (C)");
         frame.add(labelHome);
 
         // button +1 home
@@ -130,11 +131,16 @@ public class Interface implements ActionListener {
         btnAdd1Home.setCursor(new Cursor(Cursor.HAND_CURSOR));
         frame.add(btnAdd1Home);
 
+        // Score label
+        lblScore.setBounds(frameWidth / 2 - 30, 100, 80, 20);
+        lblScore.setFont(new Font("Arial", Font.PLAIN, 20));
+        frame.add(lblScore);
+
         // Guest Label
         JLabel labelGuest = new JLabel();
         labelGuest.setBounds(frameWidth - 150 - frameMargin, frameMargin * 4, 150, 20);
         labelGuest.setHorizontalAlignment(SwingConstants.RIGHT);
-        labelGuest.setText(strGuest);
+        labelGuest.setText(strGuest + " (O)");
         frame.add(labelGuest);
 
         // button +1 guest
@@ -168,6 +174,10 @@ public class Interface implements ActionListener {
         }
     }
 
+    private void manageScoreLabel(){
+        lblScore.setText(fileManager.getPointsFormatted());
+    }
+
     @Override
     // when one button is pressed:
     public void actionPerformed(ActionEvent e) {
@@ -198,6 +208,10 @@ public class Interface implements ActionListener {
                 String[] teamsName = fileManager.setTeams(txtHome.getText(), txtGuest.getText());
                 setTeamsName(teamsName[0], teamsName[1]);
             }
+        }
+
+        if (e.getSource() == btnAdd1Home || e.getSource() == btnAdd1Guest || e.getSource() == btnRemove1Home || e.getSource() == btnRemove1Guest){
+            manageScoreLabel();
         }
     }
 }

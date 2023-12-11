@@ -90,4 +90,8 @@ public class FileManager {
         return new String[] {home, guest};
     }
 
+    public String getPointsFormatted(){
+        Format format = new Format(ptsHome, ptsGuest);
+        return format.toString(0);
+    }
 }
