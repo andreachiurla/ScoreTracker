@@ -29,6 +29,13 @@ public class Interface implements ActionListener {
     String strHome = "Home";
     String strGuest = "Guest";
     JLabel lblScore = new JLabel("  0 - 0 ");
+    JLabel lblQuarters = new JLabel("Quarter");
+    JCheckBox cbxSendMessage = new JCheckBox("Send Telegram");
+    JButton btnNextQuarter = new JButton("Next");
+    JButton btnPreviousQuarter = new JButton("Previous");
+    JLabel lblActualQuarter = new JLabel("0");
+
+    private int actualQuarter = 0;
 
     private boolean isAlreadyEsecutedOnce1;
     private boolean isAlreadyEsecutedOnce2;
@@ -163,6 +170,29 @@ public class Interface implements ActionListener {
         btnReturnToHome.setCursor(new Cursor(Cursor.HAND_CURSOR));
         frame.add(btnReturnToHome);
 
+        // QUARTERS LABEL
+        lblQuarters.setBounds(frameWidth / 2 - 25, frameHeight - 105, 60, 20);
+        lblQuarters.setFont(new Font("Tahoma", Font.BOLD, 13));
+        frame.add(lblQuarters);
+
+        // Set actual quarter label
+        lblActualQuarter.setBounds(frameWidth / 2, frameHeight - 80, 20, 20);
+        frame.add(lblActualQuarter);
+
+        // Set quarter button +1
+        btnNextQuarter.setBounds(frameWidth / 2 + 20, frameHeight - 80, 70, 20);
+        btnNextQuarter.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        frame.add(btnNextQuarter);
+
+        // Set quarter button -1
+        btnPreviousQuarter.setBounds(frameWidth / 2 - 80, frameHeight - 80, 70, 20);
+        btnPreviousQuarter.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        frame.add(btnPreviousQuarter);
+
+        // Send message checkbox
+        cbxSendMessage.setBounds(frameWidth / 2 - 60, frameHeight - 55, 150, 20);
+        frame.add(cbxSendMessage);
+
         // setting action listeners
         if(!isAlreadyEsecutedOnce1){    // Registering ActionListener to the button
             isAlreadyEsecutedOnce1 = true;
@@ -171,6 +201,8 @@ public class Interface implements ActionListener {
             btnAdd1Guest.addActionListener(this);
             btnRemove1Home.addActionListener(this);
             btnReturnToHome.addActionListener(this);
+            btnNextQuarter.addActionListener(this);
+            btnPreviousQuarter.addActionListener(this);
         }
     }
 
@@ -184,12 +216,31 @@ public class Interface implements ActionListener {
         // checks which buttons has been pressed
         if(e.getSource() == btnTeams){
             setTeamsPage();
-        }else if(e.getSource() == btnPointsTracker){
+        }else if(e.getSource() == btnNextQuarter){
+            if (actualQuarter < 4) {
+                actualQuarter++;
+                lblActualQuarter.setText("" + actualQuarter);
+                if (cbxSendMessage.isSelected()) {
+                    SendMessage.sendToTelegram(actualQuarter);
+                }
+            }
+        } else if(e.getSource() == btnPreviousQuarter){
+            if(actualQuarter > 1) {
+                actualQuarter--;
+                lblActualQuarter.setText("" + actualQuarter);
+            }
+        } else if(e.getSource() == btnPointsTracker){
             setPointsTrackerPage();
         }else if(e.getSource() == btnAdd1Home){
             fileManager.add1Home();
+            if (cbxSendMessage.isSelected()) {
+                SendMessage.sendToTelegram(strHome, fileManager.getPointsFormatted());
+            }
         }else if(e.getSource() == btnAdd1Guest){
             fileManager.add1Guest();
+            if (cbxSendMessage.isSelected()) {
+                SendMessage.sendToTelegram(strGuest, fileManager.getPointsFormatted());
+            }
         }else if(e.getSource() == btnRemove1Home){
             fileManager.remove1Home();
         }else if(e.getSource() == btnRemove1Guest){
