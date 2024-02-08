@@ -10,33 +10,7 @@ public class SendMessage {
     public static void sendToTelegram(String strTeam, String strPoints) {
         String urlString = "https://api.telegram.org/bot%s/sendMessage?chat_id=%s&text=%s";
 
-        //Add Telegram token (given Token is fake)
-        String apiToken = "6925000016:AAFQ-IpiXFXC_iGDOpAp62ql2BlQeOnZ4P8";
-
-        //Add chatId (given chatId is fake)
-        String chatId = "-1001999704835";
-
         String textMessage = "🚀" + strTeam + ": GOL! - Punteggio: " + strPoints;
-
-        urlString = String.format(urlString, apiToken, chatId, textMessage);
-
-        try {
-            URL url = new URL(urlString);
-            URLConnection conn = url.openConnection();
-            InputStream is = new BufferedInputStream(conn.getInputStream());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    public static void sendToTelegram(int quarto){
-        String urlString = "https://api.telegram.org/bot%s/sendMessage?chat_id=%s&text=%s";
-
-        String textMessage = "🕒E' iniziato il ";
-        if(quarto == 2) textMessage += "secondo";
-        else if(quarto == 3) textMessage += "terzo";
-        else if(quarto == 4) textMessage += "quarto";
-        textMessage += " tempo.";
-        if (quarto == 1) textMessage = "🕒E' appena iniziata la partita";
 
         urlString = String.format(urlString, token, chatID, textMessage);
 
@@ -46,6 +20,55 @@ public class SendMessage {
             InputStream is = new BufferedInputStream(conn.getInputStream());
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+    public static void sendToTelegram(int quarto, String strHome, String strGuest){
+        String urlString = "https://api.telegram.org/bot%s/sendMessage?chat_id=%s&text=%s";
+
+        String textMessage = "🕒E' iniziato il ";
+        if(quarto == 2) textMessage += "secondo";
+        else if(quarto == 3) textMessage += "terzo";
+        else if(quarto == 4) textMessage += "quarto";
+        textMessage += " tempo.";
+        if (quarto == 1) {
+            if (strHome.equals("Home")) {
+                System.out.println("ERR: inserire il nome della squadra di casa.");
+                textMessage = "";
+            }else{
+                textMessage = "🕒E' appena iniziata la partita: " + strHome + " vs " + strGuest;
+            }
+        }
+        else if (quarto == 0) textMessage = "🏅PARTITA TERMINATA🏅";
+
+        urlString = String.format(urlString, token, chatID, textMessage);
+        System.out.println("URL: " + urlString);
+
+        try {
+            URL url = new URL(urlString);
+            URLConnection conn = url.openConnection();
+            InputStream is = new BufferedInputStream(conn.getInputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void sendToTelegram(String strTeam, String strPoints, int temp){
+        if (strTeam.equals("Home")){
+            System.out.println("ERR: inserire il nome della squadra di casa.");
+        }else {
+            String urlString = "https://api.telegram.org/bot%s/sendMessage?chat_id=%s&text=%s";
+
+            String textMessage = "❌" + strTeam + ": GOL ANNULLATO❌. Punteggio attuale:" + strPoints;
+
+            urlString = String.format(urlString, token, chatID, textMessage);
+            System.out.println("URL: " + urlString);
+
+            try {
+                URL url = new URL(urlString);
+                URLConnection conn = url.openConnection();
+                InputStream is = new BufferedInputStream(conn.getInputStream());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

@@ -52,6 +52,7 @@ public class Interface implements ActionListener {
         frame.getContentPane().setLayout(null);
         frame.setSize(frameWidth, frameHeight);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);   // stop execution when frame is closed
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
 
@@ -221,11 +222,17 @@ public class Interface implements ActionListener {
                 actualQuarter++;
                 lblActualQuarter.setText("" + actualQuarter);
                 if (cbxSendMessage.isSelected()) {
-                    SendMessage.sendToTelegram(actualQuarter);
+                    SendMessage.sendToTelegram(actualQuarter, strHome, strGuest);
+                }
+            }else if(actualQuarter == 4){
+                actualQuarter = 0;
+                lblActualQuarter.setText("" + actualQuarter);
+                if (cbxSendMessage.isSelected()) {
+                    SendMessage.sendToTelegram(actualQuarter, strHome, strGuest);
                 }
             }
         } else if(e.getSource() == btnPreviousQuarter){
-            if(actualQuarter > 1) {
+            if(actualQuarter > 0) {
                 actualQuarter--;
                 lblActualQuarter.setText("" + actualQuarter);
             }
@@ -243,8 +250,14 @@ public class Interface implements ActionListener {
             }
         }else if(e.getSource() == btnRemove1Home){
             fileManager.remove1Home();
+            if (cbxSendMessage.isSelected()) {
+                SendMessage.sendToTelegram(strHome, fileManager.getPointsFormatted(), -1);
+            }
         }else if(e.getSource() == btnRemove1Guest){
             fileManager.remove1Guest();
+            if (cbxSendMessage.isSelected()) {
+                SendMessage.sendToTelegram(strGuest, fileManager.getPointsFormatted(), -1);
+            }
         }else if(e.getSource() == btnReturnToHome){
             setHomePage();
         }else if(e.getSource() == btnSubmitTeams){
