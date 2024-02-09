@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
@@ -7,10 +8,12 @@ public class SendMessage {
     private static String token;
     private static String chatID;
 
-    public static void sendToTelegram(String strTeam, String strPoints) {
+    public static boolean sendToTelegram(String strTeamGol, String strHome, String strGuest, int ptsHome, int ptsGuest) {
+        if(strHome.equals("Home") || strGuest.equals("Guest")) return false;
+
         String urlString = "https://api.telegram.org/bot%s/sendMessage?chat_id=%s&text=%s";
 
-        String textMessage = "🚀" + strTeam + ": GOL! - Punteggio: " + strPoints;
+        String textMessage = "🚀" + strTeamGol + ": GOL!🚀 Punteggio: " + getPrintableScore(strHome, strGuest, ptsHome, ptsGuest);
 
         urlString = String.format(urlString, token, chatID, textMessage);
 
@@ -21,8 +24,11 @@ public class SendMessage {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return true;
     }
-    public static void sendToTelegram(int quarto, String strHome, String strGuest){
+    public static boolean sendToTelegram(int quarto, String strHome, String strGuest, int ptsHome, int ptsGuest){
+        if(strHome.equals("Home") || strGuest.equals("Guest")) return false;
+
         String urlString = "https://api.telegram.org/bot%s/sendMessage?chat_id=%s&text=%s";
 
         String textMessage = "🕒E' iniziato il ";
@@ -31,14 +37,9 @@ public class SendMessage {
         else if(quarto == 4) textMessage += "quarto";
         textMessage += " tempo.";
         if (quarto == 1) {
-            if (strHome.equals("Home")) {
-                System.out.println("ERR: inserire il nome della squadra di casa.");
-                textMessage = "";
-            }else{
-                textMessage = "🕒E' appena iniziata la partita: " + strHome + " vs " + strGuest;
-            }
+            textMessage = "🕒E' appena iniziata la partita: " + strHome + " vs " + strGuest;
         }
-        else if (quarto == 0) textMessage = "🏅PARTITA TERMINATA🏅";
+        else if (quarto == 0) textMessage = "🏅PARTITA TERMINATA🏅" + " Punteggio finale: " + getPrintableScore(strHome, strGuest, ptsHome, ptsGuest);
 
         urlString = String.format(urlString, token, chatID, textMessage);
         System.out.println("URL: " + urlString);
@@ -50,26 +51,26 @@ public class SendMessage {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return true;
     }
-    public static void sendToTelegram(String strTeam, String strPoints, int temp){
-        if (strTeam.equals("Home")){
-            System.out.println("ERR: inserire il nome della squadra di casa.");
-        }else {
-            String urlString = "https://api.telegram.org/bot%s/sendMessage?chat_id=%s&text=%s";
+    public static boolean sendToTelegram(String strTeam, String strHome, String strGuest, int ptsHome, int ptsGuest, int temp){
+        if(strHome.equals("Home") || strGuest.equals("Guest")) return false;
 
-            String textMessage = "❌" + strTeam + ": GOL ANNULLATO❌. Punteggio attuale:" + strPoints;
+        String urlString = "https://api.telegram.org/bot%s/sendMessage?chat_id=%s&text=%s";
 
-            urlString = String.format(urlString, token, chatID, textMessage);
-            System.out.println("URL: " + urlString);
+        String textMessage = "❌" + strTeam + ": GOL ANNULLATO❌. Punteggio attuale: " + getPrintableScore(strHome, strGuest, ptsHome, ptsGuest);
 
-            try {
-                URL url = new URL(urlString);
-                URLConnection conn = url.openConnection();
-                InputStream is = new BufferedInputStream(conn.getInputStream());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        urlString = String.format(urlString, token, chatID, textMessage);
+        System.out.println("URL: " + urlString);
+
+        try {
+            URL url = new URL(urlString);
+            URLConnection conn = url.openConnection();
+            InputStream is = new BufferedInputStream(conn.getInputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        return true;
     }
 
     public static void readConfig() throws IOException {
@@ -77,6 +78,10 @@ public class SendMessage {
         config.load(new FileInputStream("config.properties"));
         SendMessage.token = config.getProperty("token_bot");
         SendMessage.chatID = config.getProperty("chat_id");
+    }
+
+    private static String getPrintableScore(String strHome, String strGuest, int ptsHome, int ptsGuest){
+        return strHome + " " + ptsHome + " - " + ptsGuest + " " + strGuest;
     }
 
 }

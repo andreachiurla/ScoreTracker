@@ -222,13 +222,17 @@ public class Interface implements ActionListener {
                 actualQuarter++;
                 lblActualQuarter.setText("" + actualQuarter);
                 if (cbxSendMessage.isSelected()) {
-                    SendMessage.sendToTelegram(actualQuarter, strHome, strGuest);
+                    if (!SendMessage.sendToTelegram(actualQuarter, strHome, strGuest, fileManager.getPtsHome(), fileManager.getPtsGuest())){
+                        JOptionPane.showMessageDialog(frame, "Inserire i nomi delle due squadre per inviare il messaggio");
+                    }
                 }
             }else if(actualQuarter == 4){
                 actualQuarter = 0;
                 lblActualQuarter.setText("" + actualQuarter);
                 if (cbxSendMessage.isSelected()) {
-                    SendMessage.sendToTelegram(actualQuarter, strHome, strGuest);
+                    if (!SendMessage.sendToTelegram(actualQuarter, strHome, strGuest, fileManager.getPtsHome(), fileManager.getPtsGuest())){
+                        JOptionPane.showMessageDialog(frame, "Inserire i nomi delle due squadre per inviare il messaggio");
+                    }
                 }
             }
         } else if(e.getSource() == btnPreviousQuarter){
@@ -239,24 +243,40 @@ public class Interface implements ActionListener {
         } else if(e.getSource() == btnPointsTracker){
             setPointsTrackerPage();
         }else if(e.getSource() == btnAdd1Home){
-            fileManager.add1Home();
-            if (cbxSendMessage.isSelected()) {
-                SendMessage.sendToTelegram(strHome, fileManager.getPointsFormatted());
+            if (actualQuarter == 0){
+                JOptionPane.showMessageDialog(frame, "Ricordati di segnare che è cominciata la partita!");
+            }else {
+                fileManager.add1Home();
+                if (cbxSendMessage.isSelected()) {
+                    if (!SendMessage.sendToTelegram(strHome, strHome, strGuest, fileManager.getPtsHome(), fileManager.getPtsGuest())){
+                        JOptionPane.showMessageDialog(frame, "Inserire i nomi delle due squadre per inviare il messaggio");
+                    }
+                }
             }
         }else if(e.getSource() == btnAdd1Guest){
-            fileManager.add1Guest();
-            if (cbxSendMessage.isSelected()) {
-                SendMessage.sendToTelegram(strGuest, fileManager.getPointsFormatted());
+            if (actualQuarter == 0){
+                JOptionPane.showMessageDialog(frame, "Ricordati di segnare che è cominciata la partita!");
+            }else {
+                fileManager.add1Guest();
+                if (cbxSendMessage.isSelected()) {
+                    if(!SendMessage.sendToTelegram(strGuest, strHome, strGuest, fileManager.getPtsHome(), fileManager.getPtsGuest())){
+                        JOptionPane.showMessageDialog(frame, "Inserire i nomi delle due squadre per inviare il messaggio");
+                    }
+                }
             }
         }else if(e.getSource() == btnRemove1Home){
             fileManager.remove1Home();
             if (cbxSendMessage.isSelected()) {
-                SendMessage.sendToTelegram(strHome, fileManager.getPointsFormatted(), -1);
+                if (!SendMessage.sendToTelegram(strHome, strHome, strGuest, fileManager.getPtsHome(), fileManager.getPtsGuest(),-1)){
+                    JOptionPane.showMessageDialog(frame, "Inserire i nomi delle due squadre per inviare il messaggio");
+                }
             }
         }else if(e.getSource() == btnRemove1Guest){
             fileManager.remove1Guest();
             if (cbxSendMessage.isSelected()) {
-                SendMessage.sendToTelegram(strGuest, fileManager.getPointsFormatted(), -1);
+                if(!SendMessage.sendToTelegram(strGuest, strHome, strGuest, fileManager.getPtsHome(), fileManager.getPtsGuest(), -1)){
+                    JOptionPane.showMessageDialog(frame, "Inserire i nomi delle due squadre per inviare il messaggio");
+                }
             }
         }else if(e.getSource() == btnReturnToHome){
             setHomePage();

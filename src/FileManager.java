@@ -96,4 +96,12 @@ public class FileManager {
         Format format = new Format(ptsHome, ptsGuest);
         return format.toString(0);
     }
+
+    public int getPtsHome(){
+        return ptsHome;
+    }
+
+    public int getPtsGuest(){
+        return ptsGuest;
+    }
 }
