@@ -1,14 +1,20 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 public class Interface implements ActionListener {
     final int frameWidth = 300;
     final int frameHeight = 250;
-    final int buttonWidth = 100;
-    final int buttonHeight = 100;
-    final int frameMargin = 20;
     JFrame frame = new JFrame();
+    JPanel mainPanel = new JPanel(new BorderLayout());
+    JList<String> leftList = new JList<>();
+    JPanel centerPanel = new JPanel(new BorderLayout());
+    JList<String> rightList = new JList<>();
+    JPanel homePanel = new JPanel(new BorderLayout());
+    JPanel guestPanel = new JPanel(new BorderLayout());
     JButton btnAdd1Home = new JButton("+1");
     JButton btnAdd1Guest = new JButton("+1");
     JButton btnRemove1Home = new JButton("-1");
@@ -24,43 +30,70 @@ public class Interface implements ActionListener {
     public void createFrame(){
         frame.setTitle("ScoreTracker");
         frame.getContentPane().setLayout(null);
-        frame.setSize(frameWidth, frameHeight);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);   // stop esecution when frame is closed
+        frame.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                super.componentResized(e);
+                int width = frame.getWidth() - frame.getInsets().left - frame.getInsets().right;
+                int height = frame.getHeight() - frame.getInsets().top - frame.getInsets().bottom;
+                mainPanel.setBounds(0, 0, width, height);
+            }
+        });
+        frame.setSize(frameWidth, frameHeight);
         frame.setVisible(true);
+        frame.add(mainPanel);
+        mainPanel.add(centerPanel, BorderLayout.CENTER);
+        leftList.setListData(new String[] {
+                "Primo"
+                , "Secondo"
+                , "Terzo"
+                , "Quarto"
+                , "Quinto"
+                , "Sesto"
+                , "Settimo"
+        });
+        rightList.setListData(new String[] {
+                "Primo"
+                , "Secondo"
+                , "Terzo"
+                , "Quarto"
+                , "Quinto"
+                , "Sesto"
+                , "Settimo"
+        });
+        mainPanel.add(leftList, BorderLayout.WEST);
+        mainPanel.add(rightList, BorderLayout.EAST);
+        centerPanel.add(homePanel, BorderLayout.WEST);
+        centerPanel.add(guestPanel, BorderLayout.EAST);
     }
 
     public void setPointsTracker(){
         // Home Label
         JLabel labelHome = new JLabel();
-        labelHome.setBounds(frameMargin, frameMargin, 50, 20);
         labelHome.setText("Home");
-        frame.add(labelHome);
+        homePanel.add(labelHome, BorderLayout.NORTH);
 
         // button +1 home
-        btnAdd1Home.setBounds(frameMargin, frameMargin * 2, buttonWidth, buttonHeight);
         btnAdd1Home.addActionListener(this);    //Registering ActionListener to the button
-        frame.add(btnAdd1Home);
+        homePanel.add(btnAdd1Home, BorderLayout.CENTER);
 
         // Guest Label
         JLabel labelGuest = new JLabel();
-        labelGuest.setBounds(frameWidth - 50 - frameMargin, frameMargin, 50, 20);
         labelGuest.setText("Guest");
-        frame.add(labelGuest);
+        guestPanel.add(labelGuest, BorderLayout.NORTH);
 
         // button +1 guest
-        btnAdd1Guest.setBounds(frameWidth - buttonWidth - frameMargin, frameMargin * 2, buttonWidth, buttonHeight);
         btnAdd1Guest.addActionListener(this);   //Registering ActionListener to the button
-        frame.add(btnAdd1Guest);
+        guestPanel.add(btnAdd1Guest, BorderLayout.CENTER);
 
         // button -1 home
-        btnRemove1Home.setBounds(frameMargin, frameMargin * 8, buttonWidth / 2, buttonHeight / 2);
         btnRemove1Home.addActionListener(this);   //Registering ActionListener to the button
-        frame.add(btnRemove1Home);
+        homePanel.add(btnRemove1Home, BorderLayout.SOUTH);
 
         // button -1 guest
-        btnRemove1Guest.setBounds(frameWidth - buttonWidth / 2 - frameMargin, frameMargin * 8, buttonWidth / 2, buttonHeight / 2);
         btnRemove1Guest.addActionListener(this);   //Registering ActionListener to the button
-        frame.add(btnRemove1Guest);
+        guestPanel.add(btnRemove1Guest, BorderLayout.SOUTH);
     }
 
     @Override
