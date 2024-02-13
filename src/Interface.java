@@ -20,11 +20,11 @@ public class Interface implements ActionListener {
     JButton btnRemove1Home = new JButton("-1");
     JButton btnRemove1Guest = new JButton("-1");
 
-    FileManager fileManager = new FileManager();
+    FileManager fileManager;
 
 
-    public Interface(){
-
+    public Interface(FileManager fileManager){
+        this.fileManager = fileManager;
     }
 
     public void createFrame(){
