@@ -68,4 +68,12 @@ public class FileManager {
             e.printStackTrace();
         }
     }
+
+    public int getPtsHome() {
+        return ptsHome;
+    }
+
+    public int getPtsGuest() {
+        return ptsGuest;
+    }
 }
