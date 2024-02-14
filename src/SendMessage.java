@@ -8,13 +8,36 @@ public class SendMessage {
     private static String token;
     private static String chatID;
 
-    public static boolean sendToTelegram(String strTeamGol, String strHome, String strGuest, int ptsHome, int ptsGuest) {
+    /**
+     * Sends message to the Telegram channel
+     * @param team true -> home; false -> guest
+     * @param strHome
+     * @param strGuest
+     * @param ptsHome
+     * @param ptsGuest
+     * @return
+     */
+    public static boolean sendToTelegram(boolean team, String strHome, String strGuest, int ptsHome, int ptsGuest) {
         if(strHome.equals("Home") || strGuest.equals("Guest")) return false;
 
         String urlString = "https://api.telegram.org/bot%s/sendMessage?chat_id=%s&text=%s";
 
-        String textMessage = "🚀" + strTeamGol + ": GOL!🚀 Punteggio: " + getPrintableScore(strHome, strGuest, ptsHome, ptsGuest);
+        // building message
+        String textMessage = "";
+        if (team){
+            textMessage += "🏠" + strHome;
+        }else{
+            textMessage += "✈️" + strGuest;
+        }
+        textMessage += ": GOL!";
+        if (team){
+            textMessage += "🏠";
+        }else{
+            textMessage += "✈️";
+        }
+        textMessage += "%0APunteggio: " + getPrintableScore(strHome, strGuest, ptsHome, ptsGuest);
 
+        // building URL
         urlString = String.format(urlString, token, chatID, textMessage);
 
         try {
@@ -39,7 +62,7 @@ public class SendMessage {
         if (quarto == 1) {
             textMessage = "🕒E' appena iniziata la partita: " + strHome + " vs " + strGuest;
         }
-        else if (quarto == 0) textMessage = "🏅PARTITA TERMINATA🏅" + " Punteggio finale: " + getPrintableScore(strHome, strGuest, ptsHome, ptsGuest);
+        else if (quarto == 0) textMessage = "🏅PARTITA TERMINATA🏅" + "%0APunteggio finale: " + getPrintableScore(strHome, strGuest, ptsHome, ptsGuest);
 
         urlString = String.format(urlString, token, chatID, textMessage);
         System.out.println("URL: " + urlString);
@@ -58,7 +81,7 @@ public class SendMessage {
 
         String urlString = "https://api.telegram.org/bot%s/sendMessage?chat_id=%s&text=%s";
 
-        String textMessage = "❌" + strTeam + ": GOL ANNULLATO❌. Punteggio attuale: " + getPrintableScore(strHome, strGuest, ptsHome, ptsGuest);
+        String textMessage = "❌" + strTeam + ": GOL ANNULLATO❌.%0APunteggio attuale: " + getPrintableScore(strHome, strGuest, ptsHome, ptsGuest);
 
         urlString = String.format(urlString, token, chatID, textMessage);
         System.out.println("URL: " + urlString);

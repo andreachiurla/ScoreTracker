@@ -248,7 +248,7 @@ public class Interface implements ActionListener {
             }else {
                 fileManager.add1Home();
                 if (cbxSendMessage.isSelected()) {
-                    if (!SendMessage.sendToTelegram(strHome, strHome, strGuest, fileManager.getPtsHome(), fileManager.getPtsGuest())){
+                    if (!SendMessage.sendToTelegram(true, strHome, strGuest, fileManager.getPtsHome(), fileManager.getPtsGuest())){
                         JOptionPane.showMessageDialog(frame, "Inserire i nomi delle due squadre per inviare il messaggio");
                     }
                 }
@@ -259,7 +259,7 @@ public class Interface implements ActionListener {
             }else {
                 fileManager.add1Guest();
                 if (cbxSendMessage.isSelected()) {
-                    if(!SendMessage.sendToTelegram(strGuest, strHome, strGuest, fileManager.getPtsHome(), fileManager.getPtsGuest())){
+                    if(!SendMessage.sendToTelegram(false, strHome, strGuest, fileManager.getPtsHome(), fileManager.getPtsGuest())){
                         JOptionPane.showMessageDialog(frame, "Inserire i nomi delle due squadre per inviare il messaggio");
                     }
                 }
