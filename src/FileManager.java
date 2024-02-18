@@ -30,6 +30,15 @@ public class FileManager {
             System.out.println("An error occurred opening the file.");
             e.printStackTrace();
         }
+
+        try (FileWriter myWriter = new FileWriter("quarter.txt")) {
+            myWriter.write("1ST");
+            myWriter.close();
+            System.out.println("Successfully wrote to the file.");
+        } catch (IOException e) {
+            System.out.println("An error occurred opening the file.");
+            e.printStackTrace();
+        }
     }
 
     public void add1Home(){
@@ -90,6 +99,27 @@ public class FileManager {
             e.printStackTrace();
         }
         return new String[] {home, guest};
+    }
+
+    public void setQuarter(int quarter){
+        try (FileWriter myWriter = new FileWriter("quarter.txt")) {
+            if (quarter == 1) {
+                myWriter.write("1ST");
+            }else if (quarter == 2) {
+                myWriter.write("2ND");
+            }else if (quarter == 3) {
+                myWriter.write("3RD");
+            }else if (quarter == 4) {
+                myWriter.write("4TH");
+            }else{
+                myWriter.write("END");
+            }
+            myWriter.close();
+            System.out.println("Successfully wrote to the file.");
+        } catch (IOException e) {
+            System.out.println("An error occurred opening the file.");
+            e.printStackTrace();
+        }
     }
 
     public String getPointsFormatted(){

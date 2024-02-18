@@ -221,6 +221,7 @@ public class Interface implements ActionListener {
             if (actualQuarter < 4) {
                 actualQuarter++;
                 lblActualQuarter.setText("" + actualQuarter);
+                fileManager.setQuarter(actualQuarter);
                 if (cbxSendMessage.isSelected()) {
                     if (!SendMessage.sendToTelegram(actualQuarter, strHome, strGuest, fileManager.getPtsHome(), fileManager.getPtsGuest())){
                         JOptionPane.showMessageDialog(frame, "Inserire i nomi delle due squadre per inviare il messaggio");
@@ -229,6 +230,7 @@ public class Interface implements ActionListener {
             }else if(actualQuarter == 4){
                 actualQuarter = 0;
                 lblActualQuarter.setText("" + actualQuarter);
+                fileManager.setQuarter(actualQuarter);
                 if (cbxSendMessage.isSelected()) {
                     if (!SendMessage.sendToTelegram(actualQuarter, strHome, strGuest, fileManager.getPtsHome(), fileManager.getPtsGuest())){
                         JOptionPane.showMessageDialog(frame, "Inserire i nomi delle due squadre per inviare il messaggio");
@@ -239,6 +241,7 @@ public class Interface implements ActionListener {
             if(actualQuarter > 0) {
                 actualQuarter--;
                 lblActualQuarter.setText("" + actualQuarter);
+                fileManager.setQuarter(actualQuarter);
             }
         } else if(e.getSource() == btnPointsTracker){
             setPointsTrackerPage();
